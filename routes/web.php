@@ -66,20 +66,45 @@ Route::match(['get', 'post'], 'users', function (){
 // A ordem dos parâmetros importam!
 // Route::get('/user/{id?}/{name?}', function($id = null, $name = null){
 //     return 'User ' . $id . ' ' . $name;
-Route::get('/user/{id}/{name?}', function($id = null, $name = null){
-    return 'User ' . $id . ' - ' . $name;
+// Route::get('/user/{id}/{name?}', function($id = null, $name = null){
+    // return 'User ' . $id . ' - ' . $name;
     // Validando parâmetros passados
-})->where([
+// })->where([
     // 'id'   => '[0-9]+',
-    'name' => '[a-zA-z]+'
-]);
+//     'name' => '[a-zA-z]+'
+// ]);
 // })->where('id', '[0-9]+')->where('name', '[a-zA-z]+');
 
-Route::get('token/{token}', function($token){
-    return $token;
+// Route::get('token/{token}', function($token){
+//     return $token;
 // })->whereNumber('token');
 // })->whereAlpha('token');
 // })->whereAlphaNumeric('token');
 // })->whereUuid('token');
+// });
+
+// Route::prefix('user')->name('admin.')->group(function(){
+// Route::middleware('auth')->group(function(){
+//     Route::get('users', function() {
+//         return 'Hello World!';
+//     })->name('users');
+    
+//     Route::get('user/{id}', function($id) {
+//         return 'User id: ' . $id;
+//     })->name('user');
+// });
+
+// ______________________ Subdominios
+Route::domain('{user}.cursolaravelpro.test')->group(function() {
+    Route::get('{$id?}', function($user, $id = null){
+        return "{$user} {$id}";
+    });
+
+    Route::get('user', function() {
+
+    });
 });
 
+Route::fallback(function () {
+    return 'Hello World!';
+});
